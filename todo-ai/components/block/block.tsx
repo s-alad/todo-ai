@@ -26,7 +26,7 @@ export default function Block({id, _html, _tag, addBlock, removeBlock, updatePag
     const [content, setContent] = useState("")
 	const [tag, setTag] = useState("p")
 
-	const blockRef = createRef<any>()
+	const blockRef: any = createRef()
 
 	const sanitizeConf = {
 		allowedTags: ["b", "i", "a", "p"],
@@ -58,13 +58,14 @@ export default function Block({id, _html, _tag, addBlock, removeBlock, updatePag
 		<div className={s.block}>
 			<input type="checkbox" className={s.checkbox} />
 			<ContentEditable
+				id={id}
 				className={s.content}
 				innerRef={blockRef}
 				onChange={onContentChange}
 				html={content} 
 				tagName={tag}
 				onKeyDown={onKeyDown}
-			
+				/* onFocus={(e: any)=>e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)} */
 			/>
 			<FontAwesomeIcon icon={faBolt} style={{ color: "#2cb67d" }}/>
 		</div>
