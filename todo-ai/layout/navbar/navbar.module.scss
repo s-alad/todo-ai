@@ -1,0 +1,43 @@
+@use "../../styles/common.scss" as c;
+
+.navbar {
+    height: 100px;
+    padding-left: 50px;
+    display: flex;
+    align-items: center;
+    color: white;
+
+    .todoai {
+        font-size: 28px;
+        font-weight: 600;
+        margin-right: 80px;
+    }
+
+    .space {
+        flex-grow: 1;
+    }
+
+    .items {
+        display: flex;
+        font-size: 20px;
+        font-weight: 500;
+        text-decoration: underline;
+        cursor: pointer;
+
+        .about, .help {
+            margin-right: 28px;
+        }
+    }
+
+    .actions {
+        padding-right: 40px;
+        font-size: 20px;
+        font-weight: 500;
+        .login {
+            padding: 6px 14px;
+            border-radius: 8px;
+            background-color: c.$accent;
+        }
+    }
+
+}

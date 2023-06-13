@@ -1,0 +1,12 @@
+@use './common.scss' as c;
+
+:root {
+  background-color: c.$background;
+  font-family: proxima-nova, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
