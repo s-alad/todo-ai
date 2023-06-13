@@ -1,0 +1,32 @@
+@use "../styles/common.scss" as c;
+
+.main {
+  display: flex;
+  flex-direction: column;
+  padding-left: 40px;
+  padding-top: 30px;
+  min-height: 100vh;
+
+  .punchline {
+    color: white;
+    font-size: 40px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .tagline {
+    color: c.$paragraph;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 40px;
+    width: 80%;
+  }
+
+  .todo {
+    background-color: c.$card;
+    height: 400px;
+    width: 60%;
+    border-radius: c.$small-corner;
+  }
+
+
+}
