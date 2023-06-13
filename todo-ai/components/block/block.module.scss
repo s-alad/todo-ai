@@ -1,0 +1,12 @@
+@use "../styles/common.scss" as c;
+
+.block {
+    background-color: c.$card;
+    display: flex;
+    padding: 4px;
+
+    .content {
+        
+        flex: 1;
+    }
+}

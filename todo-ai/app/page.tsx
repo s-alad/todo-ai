@@ -10,6 +10,8 @@ import {
   faBolt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Todo from '@/components/todo/todo';
+import { Suspense } from 'react';
 
 
 export default function Home() {
@@ -30,9 +32,9 @@ export default function Home() {
         try it instantly below or <span>sign up</span> to save your tasks. 
       </div>
 
-      <div className={s.todo}>
-
-      </div>
+      <Suspense fallback={<p>Loading...</p>}> 
+        <Todo />
+      </Suspense>
 
     </main>
   )
