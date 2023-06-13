@@ -12,13 +12,37 @@
     font-size: 40px;
     font-weight: 600;
     margin-bottom: 10px;
+    span {
+      font-size: 40px !important;
+      margin-left: 10px;
+    }
   }
   .tagline {
     color: c.$paragraph;
     font-size: 20px;
     font-weight: 500;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     width: 80%;
+  }
+
+  .try {
+    display: flex;
+    align-items: center;
+    color: c.$accent;
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 20px;
+
+    span {
+      font-size: 24px !important;
+      cursor: pointer;
+      border: 2px solid c.$tertiary;
+      padding: 6px 14px;
+      border-radius: c.$small-corner;
+      color: c.$tertiary;
+      margin-left: 12px;
+      margin-right: 12px;
+    }
   }
 
   .todo {
