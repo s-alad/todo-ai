@@ -15,13 +15,32 @@ interface Task {
 export default function Task({ id, content, contentSetter, taskDeleter }: Task) {
 
     let [actions, setActions] = useState<Array<string>>([])
-    function createActions() {
+    async function createActions() {
         console.log("createActions")
 
-        let res = fetch("/api/actions")
-
-        let newActions = [...actions, "action"]
-        setActions(newActions)
+        let res = fetch("/api/actions", {
+            method: "POST",
+            body: JSON.stringify({ task: content }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(
+            (res) => {
+                console.log(res)
+                return res.json()
+            }
+        ).then(
+            (res) => {
+                console.log(res.output)
+                let newAction = res.output
+                let newActions = [...actions, newAction]
+                setActions(newActions)
+            }
+        ).catch(
+            (err) => {
+                console.log(err)
+            }
+        )
     }
 
     return (
