@@ -1,0 +1,8 @@
+@use "../styles/common.scss" as c;
+
+.tasks {
+    background-color: c.$card;
+    height: 400px;
+    width: 60%;
+    border-radius: c.$small-corner;
+}

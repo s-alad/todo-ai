@@ -1,12 +1,26 @@
 @use "../styles/common.scss" as c;
 
+.selected {
+    background-color: c.$standout !important;
+}
+
 .block {
     background-color: c.$card;
     display: flex;
-    padding: 4px;
-
+    padding: 6px;
+    /* margin-bottom: 4px; */
     .content {
-        
         flex: 1;
+        margin-left: 12px;
+        margin-right: 12px;
+        padding-left: 2px;
+        padding-right: 4px;
+        box-sizing:border-box;
+        /* border-bottom: 1px solid transparent; */
+
+        &:focus {
+            outline: 1px solid c.$standout;
+            /* border-bottom: 1px solid c.$standout; */
+        }
     }
 }

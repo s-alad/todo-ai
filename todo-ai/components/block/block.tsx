@@ -54,6 +54,24 @@ export default function Block({id, _html, _tag, addBlock, removeBlock, updatePag
 		}
 	}
 
+	function fixCursorPosition(e: React.FocusEvent<HTMLDivElement, Element>) {
+
+
+		const range = document.createRange();
+
+/* 		console.log("fixCursorPosition", ref)
+
+		const range = document.createRange();
+		const sel = window.getSelection();
+		range.selectNodeContents(ref as HTMLElement);
+		range.collapse(false);
+		sel?.removeAllRanges();
+		sel?.addRange(range);
+		ref?.focus();
+		range.detach(); // optimization */
+
+	}
+
 	return (
 		<div className={s.block}>
 			<input type="checkbox" className={s.checkbox} />
@@ -65,6 +83,7 @@ export default function Block({id, _html, _tag, addBlock, removeBlock, updatePag
 				html={content} 
 				tagName={tag}
 				onKeyDown={onKeyDown}
+				onFocus={(e) => {fixCursorPosition(e)}}
 				/* onFocus={(e: any)=>e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)} */
 			/>
 			<FontAwesomeIcon icon={faBolt} style={{ color: "#2cb67d" }}/>

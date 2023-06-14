@@ -12,6 +12,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Todo from '@/components/todo/todo';
 import { Suspense } from 'react';
+import Tasks from '@/components/tasks/tasks';
 
 
 export default function Home() {
@@ -33,7 +34,10 @@ export default function Home() {
       </div>
 
       <Suspense fallback={<p>Loading...</p>}> 
-        <Todo />
+        {/* <Todo /> */}
+        <Tasks />
+
+
       </Suspense>
 
     </main>

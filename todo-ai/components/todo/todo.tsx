@@ -43,11 +43,7 @@ export default function Todo() {
     useEffect(() => {
         //focus on the last block
         console.log("focus on the last block", currentBlock)
-        let currentBlockRef = document.getElementById(currentBlock.id)
-        console.log(currentBlockRef)
-        currentBlockRef?.focus()
-
-        
+        let currentBlockRef = document.getElementById(currentBlock.id)        
         const range = document.createRange();
         const sel = window.getSelection();
         range.selectNodeContents(currentBlockRef as HTMLElement);
@@ -56,11 +52,6 @@ export default function Todo() {
         sel?.addRange(range);
         currentBlockRef?.focus();
         range.detach(); // optimization
-        
-
-        
-
-
 
     }, [currentBlock])
 
