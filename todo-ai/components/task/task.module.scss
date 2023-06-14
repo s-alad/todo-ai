@@ -10,36 +10,12 @@
     flex-direction: row;
     /*  min-height: 20px; */
 
-    .check {
-        width: 25px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .checkbox {
-
-        }
-        .checmark {
-            
-        }
-
-    }
-
-    .content {
-        flex: 1;
-        height: 100%;
-        .area {
-            height: 100%;
-            width: 100%;
-            padding: 2px 8px;
-        }
-    }
-
     .action {
         width: 30px;
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
     }
 
     .delete {
@@ -47,5 +23,59 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
+    }
+}
+
+.actions {
+    background-color: white;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 25px;
+
+    .action {
+        display: flex;
+    }
+
+    .delete {
+        display: flex;
+        justify-content: start;
+        width: 60px;
+
+        .remove {
+            width: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+    }
+}
+
+
+
+.check {
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .checkbox {
+
+    }
+    .checmark {
+        
+    }
+
+}
+
+.content {
+    flex: 1;
+    height: 100%;
+    .area {
+        height: 100%;
+        width: 100%;
+        padding: 2px 8px;
     }
 }

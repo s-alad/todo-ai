@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import s from './task.module.scss';
 import TextareaAutosize from 'react-textarea-autosize';
 import Checkbox from "../ui/checkbox/checkbox";
-import { faBolt, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faBolt, faDeleteLeft, faMinus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 interface Task {
     id: string,
@@ -48,7 +48,7 @@ export default function Task({ id, content, contentSetter, taskDeleter }: Task) 
                     />
                 </div>
                 <div className={s.delete}>
-                    <FontAwesomeIcon icon={faTrash} style={{color: "#000000",}} 
+                    <FontAwesomeIcon icon={faTrash} style={{ color: "#000000", }}
                         onClick={() => { taskDeleter(id) }}
                     />
                 </div>
@@ -56,18 +56,34 @@ export default function Task({ id, content, contentSetter, taskDeleter }: Task) 
 
             <div className={s.actions}>
                 {
-                    actions.length > 0 && 
-                        <div>
-                            {
-                                actions.map((action: string) => {
-                                    return (
-                                        <div className={s.action}>
-                                            {action}
+                    actions.length > 0 &&
+                    <div>
+                        {
+                            actions.map((action: string) => {
+                                return (
+                                    <div className={s.action}>
+                                        <div className={s.check}>
+                                            <input type="checkbox" className={s.checkbox} />
                                         </div>
-                                    )
-                                })
-                            }
-                        </div>
+                                        <div className={s.content}>
+                                            <TextareaAutosize
+                                                className={s.area}
+                                                minRows={1}
+                                                maxRows={5}
+                                                value={""}
+                                                onChange={(e) => {  }}
+                                            />
+                                        </div>
+                                        <div className={s.delete}>
+                                            <div className={s.remove}>
+                                                <FontAwesomeIcon icon={faDeleteLeft} style={{ color: "#000000", }} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
                 }
             </div>
 
