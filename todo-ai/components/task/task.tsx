@@ -17,6 +17,9 @@ export default function Task({ id, content, contentSetter, taskDeleter }: Task) 
     let [actions, setActions] = useState<Array<string>>([])
     function createActions() {
         console.log("createActions")
+
+        let res = fetch("/api/actions")
+
         let newActions = [...actions, "action"]
         setActions(newActions)
     }
