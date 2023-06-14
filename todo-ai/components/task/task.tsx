@@ -32,8 +32,13 @@ export default function Task({ id, content, contentSetter, taskDeleter }: Task) 
         ).then(
             (res) => {
                 console.log(res.output)
-                let newAction = res.output
-                let newActions = [...actions, newAction]
+                let recievedActions: string[] = res.output
+                
+                let newActions = [...actions]
+                recievedActions.forEach((action: string) => {
+                        newActions.push(action)
+                    }
+                )
                 setActions(newActions)
             }
         ).catch(
@@ -41,6 +46,13 @@ export default function Task({ id, content, contentSetter, taskDeleter }: Task) 
                 console.log(err)
             }
         )
+    }
+
+    function removeAction(index: number) {
+        console.log("removeAction")
+        let newActions = [...actions]
+        newActions.splice(index, 1)
+        setActions(newActions)
     }
 
     return (
@@ -81,7 +93,7 @@ export default function Task({ id, content, contentSetter, taskDeleter }: Task) 
                     actions.length > 0 &&
                     <div>
                         {
-                            actions.map((action: string) => {
+                            actions.map((action: string, index: number) => {
                                 return (
                                     <div className={s.action}>
                                         <div className={s.check}>
@@ -92,12 +104,12 @@ export default function Task({ id, content, contentSetter, taskDeleter }: Task) 
                                                 className={s.area}
                                                 minRows={1}
                                                 maxRows={5}
-                                                value={""}
+                                                value={action}
                                                 onChange={(e) => {  }}
                                             />
                                         </div>
                                         <div className={s.delete}>
-                                            <div className={s.remove}>
+                                            <div className={s.remove} onClick={() => removeAction(index)}>
                                                 <FontAwesomeIcon icon={faDeleteLeft} style={{ color: "#000000", }} />
                                             </div>
                                         </div>
