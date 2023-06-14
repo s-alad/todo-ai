@@ -4,9 +4,17 @@ $paragraph: #94a1b2;
 $card: #72757e;
 $accent: #7f5af0;
 $standout: #fffffe;
+$highlight: $standout;
 $stroke: #010101;
 $tertiary: #2cb67d;
 
 
 $small-corner: 6px;
 $large-corner: 14px;
+
+
+@mixin center() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

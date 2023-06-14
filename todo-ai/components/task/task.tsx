@@ -1,22 +1,54 @@
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 
 import s from './task.module.scss';
 import TextareaAutosize from 'react-textarea-autosize';
 import Checkbox from "../ui/checkbox/checkbox";
-import { faBolt, faDeleteLeft, faMinus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faBolt, faDeleteLeft, faMinus, faRotateLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-interface Task {
+import uid from "@/utils/uid";
+import Action from "../action/action";
+
+interface TaskAction {
     id: string,
     content: string,
+}
+
+interface TaskInterface {
+    id: string,
+    content: string,
+    subActions: { [fieldName: string]: TaskAction },
     contentSetter: (id: string, content: string) => void,
     taskDeleter: (id: string) => void,
 }
 
-export default function Task({ id, content, contentSetter, taskDeleter }: Task) {
+export default function Task({ id, content, contentSetter, taskDeleter }: TaskInterface) {
 
-    let [actions, setActions] = useState<Array<string>>([])
-    async function createActions() {
+    let [zapLoading, setZapLoading] = useState<boolean>(false)
+    let [zapped, setZapped] = useState<boolean>(false)
+
+    let [actionsOrder, setActionsOrder] = useState<Array<string>>([])
+    let [actions, setActions] = useState<{ [fieldName: string]: TaskAction }>({})
+
+
+
+    function createActions(res: Array<string>) {
+        let newAddedOrder = []
+        let newAddedActions: { [fieldName: string]: TaskAction } = {}
+
+        for (let recievedActionContent of res) {
+            console.log(recievedActionContent)
+            let newAction: TaskAction = { id: uid(), content: recievedActionContent }
+            newAddedOrder.push(newAction.id)
+            newAddedActions[newAction.id] = newAction
+        }
+
+        setActions({ ...newAddedActions })
+        setActionsOrder([...newAddedOrder])
+    }
+
+    async function getActions() {
         console.log("createActions")
+        setZapLoading(true)
 
         let res = fetch("/api/actions", {
             method: "POST",
@@ -31,15 +63,12 @@ export default function Task({ id, content, contentSetter, taskDeleter }: Task) 
             }
         ).then(
             (res) => {
-                console.log(res.output)
-                let recievedActions: string[] = res.output
-                
-                let newActions = [...actions]
-                recievedActions.forEach((action: string) => {
-                        newActions.push(action)
-                    }
-                )
-                setActions(newActions)
+                console.log(res)
+                createActions(res.output)
+                setZapLoading(false)
+                if (!zapped) {
+                    setZapped(true)
+                }
             }
         ).catch(
             (err) => {
@@ -48,10 +77,19 @@ export default function Task({ id, content, contentSetter, taskDeleter }: Task) 
         )
     }
 
-    function removeAction(index: number) {
-        console.log("removeAction")
-        let newActions = [...actions]
-        newActions.splice(index, 1)
+    function removeAction(id: string) {
+        let newActions = { ...actions }
+        delete newActions[id as keyof Object]
+        setActions(newActions)
+
+        let newOrder = [...actionsOrder]
+        newOrder.splice(newOrder.indexOf(id), 1)
+        setActionsOrder(newOrder)
+    }
+
+    function changeActionContent(id: string, content: string) {
+        console.log(id, content)
+        let newActions = { ...actions, [id]: { ...actions[id as keyof Object], content: content } }
         setActions(newActions)
     }
 
@@ -59,61 +97,60 @@ export default function Task({ id, content, contentSetter, taskDeleter }: Task) 
         <div className={s.taskactions}>
             <div className={s.task}>
                 <div className={s.check}>
-                    {/* <label className={s.checkbox}>
-                    <input type="checkbox"/>
-                    <span className={s.checkmark}></span>
-                </label> */}
-                    {/* <Checkbox /> */}
                     <input type="checkbox" className={s.checkbox} />
                 </div>
-                <div className={s.content}>
-                    <TextareaAutosize
-                        className={s.area}
-                        minRows={1}
-                        maxRows={5}
-                        value={content}
-                        onChange={(e) => { contentSetter(id, e.target.value) }}
-                    />
-                    {/*                 <textarea value={content} onChange={(e) => {contentSetter(id, e.target.value)}}> </textarea> */}
+                <TextareaAutosize
+                    /* minRows={1}
+                    maxRows={3} */
+                    value={content}
+                    onChange={(e) => { contentSetter(id, e.target.value) }}
+                />
+                <div className={s.config}>
+                    {
+                        zapLoading ?
+                            <div className={s.circle}>
+                                <div className={s.loading}></div>
+                            </div>
+                            :
+                            <div className={s.circle}>
+                                {
+                                    zapped ?
+                                        <FontAwesomeIcon icon={faRotateLeft} style={{ color: "#2cb67d" }} className={s.zap}
+                                            onClick={() => { getActions() }}
+                                        />
+                                        :
+                                        <FontAwesomeIcon icon={faBolt} style={{ color: "#2cb67d" }} className={s.zap}
+                                            onClick={() => { getActions() }}
+                                        />
+                                }
+                            </div>
+                    }
                 </div>
-                <div className={s.action}>
-                    <FontAwesomeIcon icon={faBolt} style={{ color: "#2cb67d" }}
-                        onClick={() => { createActions() }}
-                    />
-                </div>
-                <div className={s.delete}>
-                    <FontAwesomeIcon icon={faTrash} style={{ color: "#000000", }}
-                        onClick={() => { taskDeleter(id) }}
-                    />
+                <div className={s.config}>
+                    <div className={s.circle}>
+
+                        <FontAwesomeIcon icon={faTrash} className={s.delete}
+                            onClick={() => { taskDeleter(id) }}
+                        />
+
+                    </div>
                 </div>
             </div>
 
             <div className={s.actions}>
                 {
-                    actions.length > 0 &&
+                    actionsOrder.length > 0 &&
                     <div>
                         {
-                            actions.map((action: string, index: number) => {
+                            actionsOrder.map((actionId: string, index: number) => {
                                 return (
-                                    <div className={s.action}>
-                                        <div className={s.check}>
-                                            <input type="checkbox" className={s.checkbox} />
-                                        </div>
-                                        <div className={s.content}>
-                                            <TextareaAutosize
-                                                className={s.area}
-                                                minRows={1}
-                                                maxRows={5}
-                                                value={action}
-                                                onChange={(e) => {  }}
-                                            />
-                                        </div>
-                                        <div className={s.delete}>
-                                            <div className={s.remove} onClick={() => removeAction(index)}>
-                                                <FontAwesomeIcon icon={faDeleteLeft} style={{ color: "#000000", }} />
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <Action
+                                        key={actionId}
+                                        id={actionId}
+                                        content={actions[actionId].content}
+                                        actionContentSetter={changeActionContent}
+                                        removeAction={removeAction}
+                                    />
                                 )
                             })
                         }

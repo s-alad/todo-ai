@@ -1,8 +1,51 @@
 @use "../styles/common.scss" as c;
 
-.tasks {
-    background-color: c.$card;
-    height: 400px;
+.todo {
+    background-color: c.$standout;
+    min-height: 400px;
     width: 60%;
     border-radius: c.$small-corner;
+    padding: 16px 16px;
+    color: white;
+    .taskinput {
+        padding-left: 16px;
+        width: 100%;
+        min-height: 40px;
+        background-color: c.$accent;
+        border-radius: c.$small-corner;
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+
+        textarea {
+            flex: 1;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            padding: 0 16px;
+            resize: none;
+            color: white;
+        }
+
+        .add {
+            /* width: 40px; */
+            padding-right: 14px;
+            padding-left: 12px;
+            cursor: pointer;
+            height: 60%;
+            border-left: 2px solid c.$highlight;
+            color: white;
+            @include c.center();
+            .circle {
+                @include c.center();
+                border-radius: 100%;
+                /* border: 1px solid white; */
+                width: 22px;
+                height: 22px;
+            }
+        }
+    }
+    .tasks {
+
+    }
 }
