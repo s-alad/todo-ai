@@ -1,27 +1,29 @@
 @use "../styles/common.scss" as c;
 
 .main {
-  display: flex;
-  flex-direction: column;
-  padding-left: 40px;
-  padding-top: 30px;
-  min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	padding-left: 40px;
+	padding-top: 30px;
+	min-height: 100vh;
 
-  .punchline {
-    color: white;
-    font-size: 40px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    span {
-      font-size: 40px !important;
-      margin-left: 10px;
-    }
-  }
-  .tagline {
-    color: c.$paragraph;
-    font-size: 20px;
-    font-weight: 500;
-    margin-bottom: 30px;
-    width: 80%;
-  }
+	.punchline {
+		color: white;
+		font-size: 40px;
+		font-weight: 600;
+		margin-bottom: 10px;
+
+		span {
+			font-size: 40px !important;
+			margin-left: 10px;
+		}
+	}
+
+	.tagline {
+		color: c.$paragraph;
+		font-size: 20px;
+		font-weight: 500;
+		margin-bottom: 30px;
+		width: 80%;
+	}
 }

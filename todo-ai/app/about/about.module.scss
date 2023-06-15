@@ -1,0 +1,55 @@
+@use "../styles/common.scss" as c;
+
+.technology {
+    /* height: 100px; */
+    display: flex;
+    background-color: white;
+    width: min-content;
+    border-radius: c.$small-corner;
+    padding: 8px 12px;
+    .tech {
+        background-color: c.$highlight;
+        margin-right: 20px;
+        @include c.center;
+        padding: 12px;
+        border-radius: c.$small-corner;
+        img {
+            height: 60px;
+        }
+
+        .langchain {
+            object-fit: cover;
+            
+        }
+
+        .openai {
+            height: 40px !important;
+        }
+
+    }
+}
+
+.try {
+    display: flex;
+    align-items: center;
+    color: c.$accent;
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 20px;
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .signup {
+        font-size: 24px !important;
+        cursor: pointer;
+        border: 2px solid c.$tertiary;
+        padding: 6px 14px;
+        border-radius: c.$small-corner;
+        color: c.$tertiary;
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+}

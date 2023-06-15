@@ -9,7 +9,7 @@ export default function Navbar() {
             <Link href={"/"}><div className={s.todoai}>todo.ai</div></Link>
 
             <div className={s.items}>
-                <div className={s.about}>about</div>
+                <Link href={"/about"}><div className={s.about}>about</div></Link>
                 <div className={s.help}>help</div>
                 <Link href={"/todo"}><div className={s.app}>app</div></Link>
             </div>

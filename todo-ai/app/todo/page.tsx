@@ -3,7 +3,8 @@
 import React from "react";
 
 import s from './todo.module.scss';
-import t from '../../components/instant/instant.module.scss'
+import t from '../../components/instant/instant.module.scss';
+import l from '@/styles/loader.module.scss';
 
 
 import {useAuthState} from 'react-firebase-hooks/auth';
@@ -15,6 +16,17 @@ export default function Todo() {
     const auth = firebase.auth()
     const [user, loading, error] = useAuthState(auth as any)
     console.log("user state", user, loading, error)
+
+    if (loading) {
+        return (
+            <div className={s.todo}>
+            <div className={s.welcome}>
+                <div className={l.loading}></div>
+            </div>
+        </div>
+        )
+    }
+
     if (!user) {
         return (
             <div className={s.todo}>

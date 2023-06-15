@@ -85,6 +85,39 @@
 
 
 .actions {
-    padding-left: 26px;
+    
     margin-bottom: 12px;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+
+    .expand {
+        width: 36px;
+        padding-left: 18px;
+        @include c.center();
+        padding-top: 4px;
+        padding-bottom: 18px;
+        cursor: pointer;
+        .pipe {
+            width: 10px;
+            height: 100%;
+            /* background-color: black; */
+            border-left: 2px solid black;
+            border-bottom: 2px solid black;
+            border-radius: 2px;
+        }
+    }
+
+    .collapsed {
+        width: 100%;
+        padding-left: 20px;
+        color: black;
+        font-size: 20px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .actionlist {
+        flex: 1;
+    }
 }

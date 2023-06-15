@@ -14,9 +14,11 @@ export async function POST(request: Request) {
     const parser = new CustomListOutputParser({ separator: "\n" });
     const formatInstructions = parser.getFormatInstructions();
 
+    let amount = ["one", "two", "three", "four", "five"]
+    let amountIndex = Math.floor(Math.random() * amount.length)
 
     const prompt = new PromptTemplate({
-        template: "Create up to five actionable steps for the following todo list task: {todotask}.\n{format_instructions}",
+        template: `Create ${amount[amountIndex]} actionable steps for the following todo list task: {todotask}.\n{format_instructions}`,
         inputVariables: ["todotask"],
         partialVariables: { format_instructions: formatInstructions },
     });

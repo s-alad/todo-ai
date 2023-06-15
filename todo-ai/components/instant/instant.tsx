@@ -3,6 +3,7 @@
 import React from "react";
 
 import s from './instant.module.scss';
+import l from '@/styles/loader.module.scss';
 import Tasks from "../tasks/tasks";
 import Link from "next/link";
 
@@ -16,7 +17,7 @@ export default function Instant() {
 
     if (loading) {
         return (
-            <div>loading</div>
+            <div className={l.loading}></div>
         )
     }
 

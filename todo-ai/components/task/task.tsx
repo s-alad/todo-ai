@@ -28,6 +28,7 @@ interface TaskComponent extends TaskModel {
 export default function Task(
     { id, content, checked, zapped, checkZapSetter, contentSetter, taskDeleter, subActions, subActionsOrder, actionSetter, /* actionOrderSetter */ }: TaskComponent) {
 
+    let [expanded, setExpanded] = useState<boolean>(true)
     let [zapLoading, setZapLoading] = useState<boolean>(false)
 
     function createActions(res: Array<string>) {
@@ -150,8 +151,14 @@ export default function Task(
 
             <div className={s.actions}>
                 {
-                    subActionsOrder.length > 0 &&
-                    <div>
+                    subActionsOrder.length > 0 && expanded && 
+                    <div className={s.expand} onClick={() => setExpanded(!expanded)}>
+                        <div className={s.pipe}></div>
+                    </div>
+                }
+                {
+                    subActionsOrder.length > 0 && expanded ?
+                    <div className={s.actionlist}>
                         {
                             subActionsOrder.map((actionId: string, index: number) => {
                                 return (
@@ -167,6 +174,8 @@ export default function Task(
                             })
                         }
                     </div>
+                    :
+                    <div className={s.collapsed} onClick={() => setExpanded(!expanded)}>...</div>
                 }
             </div>
 

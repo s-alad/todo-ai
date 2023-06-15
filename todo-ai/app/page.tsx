@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import s from './page.module.scss'
+import l from "@/styles/loader.module.scss"
 
 import "@fortawesome/fontawesome-svg-core/styles.css"; 
 
@@ -31,7 +32,7 @@ export default function Home() {
         no more hassle of brainstorming what needs to be done next; let our AI assistant analyze your tasks, prioritize them, and provide you with clear, personalized action steps. From simple to-do items to complex projects, our AI tool will streamline your workflow and help you achieve your goals faster and efficiently. 
       </div>
 
-      <Suspense fallback={<p>Loading...</p>}> 
+      <Suspense fallback={<div className={l.loading}></div>}> 
         <Instant />
 
 

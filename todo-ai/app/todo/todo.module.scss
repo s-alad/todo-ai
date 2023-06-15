@@ -1,3 +1,5 @@
+@use "../../styles/common.scss" as c;
+
 .todo {
     display: flex;
     flex-direction: column;
