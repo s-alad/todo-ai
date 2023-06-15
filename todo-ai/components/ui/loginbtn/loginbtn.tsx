@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import s from './loginbtn.module.scss';
 import Link from "next/link";
 import { GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
+import googleSignup from "@/firebase/sign";
 
 export default function LoginButton() {
     const router = useRouter()
@@ -20,21 +21,14 @@ export default function LoginButton() {
         router.push("/")
     }
 
-    async function signIn() {
-        try {
-            const res = await signInWithPopup(firebase.auth(), googleProvider)
-            console.log("signed in")
-            console.log(res, user)
-            router.push("/todo")
-        } catch (error) {
-            console.log(error)
-        }
+    function move() {
+        router.push("/todo")
     }
 
     if (!user) {
         return (
             <>
-            <div className={s.login} onClick={signIn}>login</div>
+            <div className={s.login} onClick={() => googleSignup(user, move)}>login</div>
             {/* <Link href={"/signup"}><div className={s.login}>login</div></Link> */}
             </>
         )

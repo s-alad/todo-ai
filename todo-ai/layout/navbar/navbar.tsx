@@ -11,7 +11,7 @@ export default function Navbar() {
             <div className={s.items}>
                 <div className={s.about}>about</div>
                 <div className={s.help}>help</div>
-                <div className={s.app}>app</div>
+                <Link href={"/todo"}><div className={s.app}>app</div></Link>
             </div>
 
             <div className={s.space}>

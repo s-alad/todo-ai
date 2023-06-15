@@ -9,6 +9,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd, faCirclePlus, faListCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
 import TextareaAutosize from 'react-textarea-autosize';
 
+import {useAuthState} from 'react-firebase-hooks/auth';
+import firebase from "@/firebase/client";
+
 interface TaskAction {
     id: string,
     content: string,
@@ -24,7 +27,6 @@ export default function Tasks() {
 
     let [order, setOrder] = useState<Array<string>>([])
     let [tasks, setTasks] = useState<{ [fieldName: string]: TaskInterface }>({})
-
 
     let [inputTask, setInputTask] = useState<string>("")
 

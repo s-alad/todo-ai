@@ -8,6 +8,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import uid from "@/utils/uid";
 import Action from "../action/action";
 
+import {useAuthState} from 'react-firebase-hooks/auth';
+import firebase from "@/firebase/client";
+import {useCollectionData} from 'react-firebase-hooks/firestore';
+import googleSignup from "@/firebase/sign";
+import { useRouter } from "next/navigation";
+
 interface TaskAction {
     id: string,
     content: string,
@@ -28,6 +34,8 @@ export default function Task({ id, content, contentSetter, taskDeleter }: TaskIn
 
     let [actionsOrder, setActionsOrder] = useState<Array<string>>([])
     let [actions, setActions] = useState<{ [fieldName: string]: TaskAction }>({})
+
+    
 
 
 

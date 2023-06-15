@@ -1,0 +1,26 @@
+@use "../../styles/common.scss" as c;
+
+.try {
+    display: flex;
+    align-items: center;
+    color: c.$accent;
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 20px;
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .signup {
+        font-size: 24px !important;
+        cursor: pointer;
+        border: 2px solid c.$tertiary;
+        padding: 6px 14px;
+        border-radius: c.$small-corner;
+        color: c.$tertiary;
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+}

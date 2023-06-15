@@ -14,6 +14,7 @@ import Todo from '@/utils/todo/todo';
 import { Suspense } from 'react';
 import Tasks from '@/components/tasks/tasks';
 import Link from 'next/link';
+import Instant from '@/components/instant/instant';
 
 export default function Home() {
 
@@ -30,13 +31,8 @@ export default function Home() {
         no more hassle of brainstorming what needs to be done next; let our AI assistant analyze your tasks, prioritize them, and provide you with clear, personalized action steps. From simple to-do items to complex projects, our AI tool will streamline your workflow and help you achieve your goals faster and efficiently. 
       </div>
 
-      <div className={s.try}>
-        try it instantly below or <Link href={"/signup"}><div className={s.signup}>sign up</div></Link> to save your tasks. 
-      </div>
-
       <Suspense fallback={<p>Loading...</p>}> 
-        {/* <Todo /> */}
-        <Tasks />
+        <Instant />
 
 
       </Suspense>
