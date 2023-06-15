@@ -1,6 +1,11 @@
 @use "../styles/common.scss" as c;
 
 .signup {
+    display: flex;
+    display: flex;
+    flex-direction: column;
+    padding-left: 40px;
+    padding-top: 30px;
     .google {
         /* width: 100px; */
         width: min-content;

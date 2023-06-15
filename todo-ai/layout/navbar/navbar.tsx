@@ -1,14 +1,17 @@
 import React from "react";
 import s from './navbar.module.scss';
+import LoginButton from "@/components/ui/loginbtn/loginbtn";
+import Link from "next/link";
 
 export default function Navbar() {
     return <>
         <nav className={s.navbar}>
-            <div className={s.todoai}>todo.ai</div>
+            <Link href={"/"}><div className={s.todoai}>todo.ai</div></Link>
 
             <div className={s.items}>
                 <div className={s.about}>about</div>
-                <div className={s.team}>help</div>
+                <div className={s.help}>help</div>
+                <div className={s.app}>app</div>
             </div>
 
             <div className={s.space}>
@@ -16,7 +19,7 @@ export default function Navbar() {
             </div>
 
             <div className={s.actions}>
-                <div className={s.login}>login</div>
+                <LoginButton />
             </div>
         </nav>
 

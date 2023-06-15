@@ -2,13 +2,21 @@
 
 import React from "react";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import firebase from "@/firebase/client";
 import s from './signup.module.scss';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {useAuthState} from 'react-firebase-hooks/auth';
+import firebase from "@/firebase/client";
+import {useCollectionData} from 'react-firebase-hooks/firestore';
 
 export default function Signup() {
 
     const googleProvider = new GoogleAuthProvider();
+
+    const auth = firebase.auth()
+    const [user, loading, error] = useAuthState(auth as any)
+
+    console.log("user state", user, loading, error)
+
 
     async function googleSignup() {
         try {
@@ -28,7 +36,7 @@ export default function Signup() {
                 <div className={s.icon}>
                     <img src="/google.png" />
                 </div>
-                <div className={s.text}>google signup</div>
+                <div className={s.text}>access with google</div>
             </div>
         </div>
     )

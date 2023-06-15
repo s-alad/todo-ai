@@ -9,6 +9,11 @@
     align-items: center;
     color: white;
 
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
     .todoai {
         font-size: 28px;
         font-weight: 600;
@@ -26,7 +31,7 @@
         text-decoration: underline;
         cursor: pointer;
 
-        .about, .help {
+        .about, .help, .app {
             margin-right: 28px;
         }
     }
@@ -34,11 +39,6 @@
     .actions {
         font-size: 20px;
         font-weight: 500;
-        .login {
-            padding: 6px 14px;
-            border-radius: c.$small-corner;
-            background-color: c.$accent;
-        }
     }
 
 }

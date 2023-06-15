@@ -10,13 +10,13 @@ import {
   faBolt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Todo from '@/components/editable/todo/todo';
+import Todo from '@/utils/todo/todo';
 import { Suspense } from 'react';
 import Tasks from '@/components/tasks/tasks';
 import Link from 'next/link';
 
-
 export default function Home() {
+
   return (
     <main className={s.main}>
 

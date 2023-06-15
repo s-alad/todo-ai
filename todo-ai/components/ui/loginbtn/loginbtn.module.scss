@@ -1,0 +1,8 @@
+@use './common.scss' as c;
+
+.login {
+    cursor: pointer;
+    padding: 6px 14px;
+    border-radius: c.$small-corner;
+    background-color: c.$accent;
+}
