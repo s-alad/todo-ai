@@ -1,6 +1,9 @@
-import Navbar from '@/layout/navbar/navbar'
 import '../styles/globals.scss'
+
+import Navbar from '@/layout/navbar/navbar'
 import Footer from '@/layout/footer/footer'
+
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata = {
   title: 'todo-ai',
@@ -14,6 +17,7 @@ export default function RootLayout({children,}: {children: React.ReactNode}) {
         <Navbar />
         {children}
         <Footer />
+        <Analytics />
       </body>
     </html>
   )
