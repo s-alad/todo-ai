@@ -7,11 +7,11 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { TaskAction } from "@/models/TaskAction";
 
 interface TaskComponent extends TaskAction {
-    actionContentSetter: (id: string, content: string) => void,
+    actionContentSetter: (id: string, content: string, subchecked: boolean) => void,
     removeAction: (id: string) => void,
 }
 
-export default function Action( {id, content, removeAction, actionContentSetter}: TaskComponent) {
+export default function Action( {id, content, checked, removeAction, actionContentSetter}: TaskComponent) {
 
     if (content == undefined || content == "") {
         return null
@@ -20,13 +20,17 @@ export default function Action( {id, content, removeAction, actionContentSetter}
     return (
         <div className={s.action}>
             <div className={s.check}>
-                <input type="checkbox" className={s.checkbox} />
+                <input type="checkbox" className={s.checkbox} checked={checked} onChange={
+                    (e) => { 
+                        actionContentSetter(id, content, e.target.checked)
+                    }
+                } />
             </div>
             <TextareaAutosize
                 /* minRows={1}
                 maxRows={3} */
                 value={content}
-                onChange={(e) => { actionContentSetter(id, e.target.value) }}
+                onChange={(e) => { actionContentSetter(id, e.target.value, checked) }}
             />
 
             <div className={s.config}>

@@ -94,9 +94,9 @@ export default function Task(
         actionSetter(id, newActions, newOrder)
     }
 
-    function changeActionContent(subid: string, content: string) {
+    function changeActionContent(subid: string, content: string, subchecked: boolean) {
         console.log(subid, content)
-        let newActions = { ...subActions, [subid]: { ...subActions[subid as keyof Object], content: content } }
+        let newActions = { ...subActions, [subid]: { ...subActions[subid as keyof Object], content: content, checked: subchecked } }
         /* setActions(newActions) */
         /* actionSetter(id, newActions) */
         actionSetter(id, newActions, subActionsOrder)
