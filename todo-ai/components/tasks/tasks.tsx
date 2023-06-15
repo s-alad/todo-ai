@@ -19,7 +19,11 @@ import { useRouter } from "next/navigation";
 import { TaskAction } from "@/models/TaskAction";
 import { TaskModel } from "@/models/TaskModel";
 
-export default function Tasks() {
+interface TasksCollection {
+    group: string,
+}
+
+export default function Tasks({group}: TasksCollection) {
 
     let [ready, setReady] = useState<boolean>(false)
 
@@ -35,7 +39,7 @@ export default function Tasks() {
     //when first loaded, get tasks from db
     useEffect(() => {
         const getTasks = async () => {
-            let res =  await db.collection("todos").doc(user!.uid).collection("home").doc("tasks").get()
+            let res =  await db.collection("todos").doc(user!.uid).collection(group).doc("tasks").get()
             console.log("result", res.data())
             if ( res.data().order.length > 0) {
                 console.log("tasks found", res.data()!.tasks)
@@ -44,6 +48,8 @@ export default function Tasks() {
                 setReady(true)
             } else {
                 console.log("no tasks")
+                setTasks({})
+                setOrder([])
                 setReady(true)
             }
         }
@@ -51,7 +57,7 @@ export default function Tasks() {
         if (user) {
             const ref = getTasks()
         }
-    }, [])
+    }, [group])
 
     //when tasks change, update db
     useEffect(() => {
@@ -61,7 +67,7 @@ export default function Tasks() {
             let dbLengthOfOrder = (await db.collection("todos").doc(user!.uid).get()).data()!.order.length */
             if (ready) {
                 console.log("updating tasks")
-                await db.collection("todos").doc(user!.uid).collection("home").doc("tasks").set({ tasks: tasks, order: order })
+                await db.collection("todos").doc(user!.uid).collection(group).doc("tasks").set({ tasks: tasks, order: order })
             }
         }
 

@@ -35,7 +35,7 @@ export default async function googleSignup(user: any): Promise<boolean> {
             console.log("user already exists")
         }
 
-        let collections = ["home", "personal", "work"]
+        let collections = ["home", "personal", "work", "instant"]
         for (let col of collections) {
             let tasksRef = firebase.firestore().collection("todos").doc(user.uid).collection(col).doc("tasks")
             let tasksDoc = await tasksRef.get()

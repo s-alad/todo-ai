@@ -37,7 +37,11 @@
             width: 35px;
             height: 35px;
             @include c.center;
-            color: c.$tertiary;
+            color: c.$card;
+        }
+        .selected {
+            /* background-color: c.$card !important; */
+            color: c.$tertiary !important;
         }
     }
 

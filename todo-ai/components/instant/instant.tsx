@@ -27,7 +27,7 @@ export default function Instant() {
                 <div className={s.try}>
                     try it instantly below or <Link href={"/todo"}><div className={s.signup}>go to your tasks</div></Link>
                 </div>
-                <Tasks />
+                <Tasks group={"instant"}/>
             </>
         )
     }
@@ -37,7 +37,7 @@ export default function Instant() {
             <div className={s.try}>
                 try it instantly below or <Link href={"/signup"}><div className={s.signup}>sign up</div></Link> to save your tasks.
             </div>
-            <Tasks />
+            <Tasks group={"instant"}/>
         </>
     )
 }
