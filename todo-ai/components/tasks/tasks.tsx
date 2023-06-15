@@ -74,7 +74,7 @@ export default function Tasks() {
 
         if (inputTask == "") {return }
 
-        let newTask: TaskModel = { id: uid(), content: inputTask, subActions: {}, subActionsOrder: [], checked: false}
+        let newTask: TaskModel = { id: uid(), content: inputTask, subActions: {}, subActionsOrder: [], checked: false, zapped: false}
         let newTasks = { ...tasks, [newTask.id]: newTask }
         setTasks(newTasks)
         setOrder([...order, newTask.id])
@@ -89,13 +89,16 @@ export default function Tasks() {
 
     function changeTaskActions(id: string, actions: { [fieldName: string]: TaskAction }, actionsOrder: Array<string>) {
         console.log(id, actions, actionsOrder)
-        let newTasks = { ...tasks, [id]: { ...tasks[id as keyof Object], subActions: actions, subActionsOrder: actionsOrder } }
+        let newTasks = { ...tasks, [id]: { ...tasks[id as keyof Object], subActions: actions, subActionsOrder: actionsOrder, zapped: true } }
         setTasks(newTasks)
+
+        //set zapped for task to true
+
     }
 
-    function changeCheck(id: string, checked: boolean) {
+    function changeCheckZapped(id: string, checked: boolean, subzapped: boolean) {
         console.log(id, checked)
-        let newTasks = { ...tasks, [id]: { ...tasks[id as keyof Object], checked: checked } }
+        let newTasks = { ...tasks, [id]: { ...tasks[id as keyof Object], checked: checked, zapped: subzapped} }
         setTasks(newTasks)
     }
 
@@ -133,7 +136,8 @@ export default function Tasks() {
                             key={id}
                             id={id}
                             checked={tasks[id as keyof Object].checked}
-                            checkSetter={changeCheck}
+                            zapped={tasks[id as keyof Object].zapped}
+                            checkZapSetter={changeCheckZapped}
 
                             content={tasks[id as keyof Object].content}
                             contentSetter={changeTaskContent}

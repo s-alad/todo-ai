@@ -20,16 +20,15 @@ interface TaskComponent extends TaskModel {
 
 
     contentSetter: (id: string, content: string) => void,
-    checkSetter: (id: string, checked: boolean) => void,
+    checkZapSetter: (id: string, checked: boolean, zapped: boolean) => void,
     taskDeleter: (id: string) => void,
     actionSetter: (id: string, actions: { [fieldName: string]: TaskAction }, order: Array<string>) => void,
 }
 
 export default function Task(
-    { id, content, checked, checkSetter, contentSetter, taskDeleter, subActions, subActionsOrder, actionSetter, /* actionOrderSetter */ }: TaskComponent) {
+    { id, content, checked, zapped, checkZapSetter, contentSetter, taskDeleter, subActions, subActionsOrder, actionSetter, /* actionOrderSetter */ }: TaskComponent) {
 
     let [zapLoading, setZapLoading] = useState<boolean>(false)
-    let [zapped, setZapped] = useState<boolean>(false)
 
     function createActions(res: Array<string>) {
         let newAddedOrder = []
@@ -47,6 +46,7 @@ export default function Task(
         console.log("newly created actions", newAddedActions, newAddedOrder)
         actionSetter(id, {...newAddedActions}, [...newAddedOrder])
         /* actionOrderSetter(id, newAddedOrder) */
+        /* checkZapSetter(id, checked, true) */
     }
 
     async function getActions() {
@@ -69,9 +69,6 @@ export default function Task(
                 console.log(res)
                 createActions(res.output)
                 setZapLoading(false)
-                if (!zapped) {
-                    setZapped(true)
-                }
             }
         ).catch(
             (err) => {
@@ -109,7 +106,7 @@ export default function Task(
                     <input type="checkbox" className={s.checkbox} checked={checked} onChange={
                         (e) => {
                             console.log(e.target.checked)
-                            checkSetter(id, e.target.checked)
+                            checkZapSetter(id, e.target.checked, zapped)
                         }
                     } />
                 </div>

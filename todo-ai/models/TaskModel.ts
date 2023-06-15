@@ -1,9 +1,10 @@
 import { TaskAction } from "./TaskAction";
 
 export interface TaskModel {
-    checked: boolean,
     id: string,
     content: string,
+    checked: boolean,
+    zapped: boolean,
     subActions: { [fieldName: string]: TaskAction },
     subActionsOrder: Array<string>,
 }

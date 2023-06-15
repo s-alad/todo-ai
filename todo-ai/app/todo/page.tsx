@@ -27,6 +27,9 @@ export default function Todo() {
 
     return (
         <div className={s.todo}>
+            <div className={s.welcome}>
+                Hi, {user.displayName}
+            </div>
             <Tasks />
         </div>
     )
