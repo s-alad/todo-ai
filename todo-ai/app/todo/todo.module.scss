@@ -16,5 +16,29 @@
         margin-bottom: 20px;
 
     }
+    .todos {
+        display: flex;
+    }
+    .categories {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        height: min-content;
+        width: 35px;
+        /* height: 200px; */
+        background-color: white;
+        border-radius: c.$small-corner;
+        margin-right: 12px;
+
+        display: flex;
+        flex-direction: column;
+
+        .category {
+            cursor: pointer;
+            width: 35px;
+            height: 35px;
+            @include c.center;
+            color: c.$tertiary;
+        }
+    }
 
 }

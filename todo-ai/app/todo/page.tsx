@@ -11,6 +11,8 @@ import {useAuthState} from 'react-firebase-hooks/auth';
 import firebase from "@/firebase/client";
 import Link from "next/link";
 import Tasks from "@/components/tasks/tasks";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBriefcase, faHome, faHouse, faPerson } from "@fortawesome/free-solid-svg-icons";
 
 export default function Todo() {
     const auth = firebase.auth()
@@ -42,7 +44,20 @@ export default function Todo() {
             <div className={s.welcome}>
                 Hi, {user.displayName}
             </div>
-            <Tasks />
+            <div className={s.todos}>
+                <div className={s.categories}>
+                    <div className={s.category}>
+                        <FontAwesomeIcon icon={faHouse} className={s.delete}/>
+                    </div>
+                    <div className={s.category}>
+                        <FontAwesomeIcon icon={faBriefcase} className={s.delete}/>
+                    </div>
+                    <div className={s.category}>
+                        <FontAwesomeIcon icon={faPerson} className={s.delete}/>
+                    </div>
+                </div>
+                <Tasks />
+            </div>
         </div>
     )
 }

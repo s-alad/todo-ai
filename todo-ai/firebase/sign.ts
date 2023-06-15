@@ -42,6 +42,18 @@ export default async function googleSignup(user: any): Promise<boolean> {
             await tasksRef.set({
                 tasks: {},
                 order: []
+/*                 home: {
+                    tasks: {},
+                    order: []
+                },
+                work: {
+                    tasks: {},
+                    order: []
+                },
+                personal: {
+                    tasks: {},
+                    order: []
+                } */
             })
         } else {
             console.log("tasks already exist")
