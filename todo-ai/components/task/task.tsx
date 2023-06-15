@@ -174,8 +174,8 @@ export default function Task(
                             })
                         }
                     </div>
-                    :
-                    <div className={s.collapsed} onClick={() => setExpanded(!expanded)}>...</div>
+                    : subActionsOrder.length > 0 && <div className={s.collapsed} onClick={() => setExpanded(!expanded)}>...</div>
+                    
                 }
             </div>
 
