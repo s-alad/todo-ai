@@ -10,7 +10,7 @@ export default function Navbar() {
 
             <div className={s.items}>
                 <Link href={"/about"}><div className={s.about}>about</div></Link>
-                <div className={s.help}>help</div>
+                <Link href={"/help"}><div className={s.help}>help</div></Link>
                 <Link href={"/todo"}><div className={s.app}>app</div></Link>
             </div>
 
