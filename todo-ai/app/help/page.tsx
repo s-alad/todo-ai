@@ -20,7 +20,7 @@ export default function Help() {
                 create a task by typing in the input box and pressing the plus button.
             </div>
             <div className={a.try}>
-                zap the task <Link href={"/todo"}><div className={a.signup}><FontAwesomeIcon icon={faBolt} style={{ color: "#2cb67d" }} /></div></Link> and immediately get actionable steps.
+                zap the task <Link href={"/todo"}><span className={a.signup}><FontAwesomeIcon icon={faBolt} style={{ color: "#2cb67d" }} /></span></Link> and immediately get actionable steps.
             </div>
 
         </div>
