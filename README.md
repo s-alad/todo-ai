@@ -9,4 +9,5 @@ theoretical fixes
 - [ ] clean up prop drilling
 - [ ] full mobile resize support
 - [ ] ability to add custom categories
+- [ ] moving tasks around
 - [ ] advanced ai generation & support
