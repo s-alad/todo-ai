@@ -63,8 +63,6 @@ export default function Tasks({group}: TasksCollection) {
     useEffect(() => {
         console.log("tasks changed", tasks, order)
         const updateTasks = async () => {
-            /* let lengthOfOrder = order.length
-            let dbLengthOfOrder = (await db.collection("todos").doc(user!.uid).get()).data()!.order.length */
             if (ready) {
                 console.log("updating tasks")
                 await db.collection("todos").doc(user!.uid).collection(group).doc("tasks").set({ tasks: tasks, order: order })
@@ -97,9 +95,6 @@ export default function Tasks({group}: TasksCollection) {
         console.log(id, actions, actionsOrder)
         let newTasks = { ...tasks, [id]: { ...tasks[id as keyof Object], subActions: actions, subActionsOrder: actionsOrder, zapped: true } }
         setTasks(newTasks)
-
-        //set zapped for task to true
-
     }
 
     function changeCheckZapped(id: string, checked: boolean, subzapped: boolean) {
@@ -151,7 +146,6 @@ export default function Tasks({group}: TasksCollection) {
 
                             subActions={tasks[id as keyof Object].subActions}
                             subActionsOrder={tasks[id as keyof Object].subActionsOrder}
-                            /* actionOrderSetter={changeTaskActionsOrder} */
                             actionSetter={changeTaskActions}
                         />
                     )

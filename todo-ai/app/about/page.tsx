@@ -21,10 +21,6 @@ export default function About() {
                 created with <Link href={"https://github.com/s-alad/todo-ai"}><div className={a.signup}>code</div></Link>
             </div>
             <div className={a.technology}>
-                {/* <img src="/ts.png" />
-                <img src="/sass.png" />
-                <img src="/firebase.png" />
-                <img src="/langchain.png" /> */}
                 <div className={a.tech}><img src="/nextjs.png" /></div>
                 <div className={a.tech}><img src="/ts.png" /></div>
                 <div className={a.tech}><img src="/sass.png" /></div>

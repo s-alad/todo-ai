@@ -31,7 +31,6 @@ export default function LoginButton() {
         return (
             <>
             <div className={s.login} onClick={() => signUp()}>login</div>
-            {/* <Link href={"/signup"}><div className={s.login}>login</div></Link> */}
             </>
         )
     } else {

@@ -11,15 +11,10 @@ const auth = firebase.auth()
 
 export default async function googleSignup(user: any): Promise<boolean> {
     try {
-        console.log("signing in")
+        /* console.log("signing in") */
         const res = await signInWithPopup(firebase.auth(), googleProvider)
-        console.log(res)
-        console.log(res.user)
-
-        //check if user exists in firestore users collection
-        //if not, create user in firestore users collection
-        //if so, do nothing
-        //redirect to dashboard
+        /* console.log(res)
+        console.log(res.user) */
 
         let user = res.user
         let userRef = firebase.firestore().collection("users").doc(user.uid)
@@ -44,18 +39,6 @@ export default async function googleSignup(user: any): Promise<boolean> {
                 await tasksRef.set({
                     tasks: {},
                     order: []
-    /*                 home: {
-                        tasks: {},
-                        order: []
-                    },
-                    work: {
-                        tasks: {},
-                        order: []
-                    },
-                    personal: {
-                        tasks: {},
-                        order: []
-                    } */
                 })
             } else {
                 console.log("tasks already exist")
