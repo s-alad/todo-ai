@@ -11,6 +11,9 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 import {useAuthState} from 'react-firebase-hooks/auth';
 import firebase from "@/firebase/client";
+import {useCollectionData} from 'react-firebase-hooks/firestore';
+import googleSignup from "@/firebase/sign";
+import { useRouter } from "next/navigation";
 
 interface TaskAction {
     id: string,
@@ -21,21 +24,65 @@ interface TaskInterface {
     id: string,
     content: string,
     subActions: { [fieldName: string]: TaskAction },
+    subActionsOrder: Array<string>,
 }
 
 export default function Tasks() {
+
+    let [ready, setReady] = useState<boolean>(false)
 
     let [order, setOrder] = useState<Array<string>>([])
     let [tasks, setTasks] = useState<{ [fieldName: string]: TaskInterface }>({})
 
     let [inputTask, setInputTask] = useState<string>("")
 
-    function addEmptyTask() {
-        let newTask: TaskInterface = { id: uid(), content: "", subActions: {}}
-        let newTasks = { ...tasks, [newTask.id]: newTask }
-        setTasks(newTasks)
-        setOrder([...order, newTask.id])
-    }
+    const auth = firebase.auth()
+    const [user, loading, error] = useAuthState(auth as any)
+    const db = firebase.firestore()
+
+    /* if (loading) {
+        return (
+            <div>loading</div>
+        )
+    } */
+
+    //when first loaded, get tasks from db
+    useEffect(() => {
+        const getTasks = async () => {
+            let res =  await db.collection("todos").doc(user!.uid).get()
+            console.log("result", res.data())
+            if ( res.data().order.length > 0) {
+                console.log("tasks found", res.data()!.tasks)
+                setTasks(res.data()!.tasks)
+                setOrder(res.data()!.order)
+                setReady(true)
+            } else {
+                console.log("no tasks")
+                setReady(true)
+            }
+        }
+
+        if (user) {
+            const ref = getTasks()
+        }
+    }, [])
+
+    //when tasks change, update db
+    useEffect(() => {
+        console.log("tasks changed", tasks, order)
+        const updateTasks = async () => {
+            /* let lengthOfOrder = order.length
+            let dbLengthOfOrder = (await db.collection("todos").doc(user!.uid).get()).data()!.order.length */
+            if (ready) {
+                console.log("updating tasks")
+                await db.collection("todos").doc(user!.uid).set({ tasks: tasks, order: order })
+            }
+        }
+
+        if (user) {
+            const ref = updateTasks()
+        }
+    }, [tasks, order])
 
     function addTask() {
 
@@ -43,7 +90,7 @@ export default function Tasks() {
             return 
         }
 
-        let newTask: TaskInterface = { id: uid(), content: inputTask, subActions: {}}
+        let newTask: TaskInterface = { id: uid(), content: inputTask, subActions: {}, subActionsOrder: []}
         let newTasks = { ...tasks, [newTask.id]: newTask }
         setTasks(newTasks)
         setOrder([...order, newTask.id])
@@ -55,6 +102,23 @@ export default function Tasks() {
         let newTasks = { ...tasks, [id]: { ...tasks[id as keyof Object], content: content } }
         setTasks(newTasks)
     }
+
+    function changeTaskActions(id: string, actions: { [fieldName: string]: TaskAction }, actionsOrder: Array<string>) {
+        console.log(id, actions, actionsOrder)
+        //actions are in the form of Object { liwmh6z5wr98odtwomj: {…}, liwmh6z587bdhku9ye8: {…}, liwmh6z5p95xe200u6: {…}, liwmh6z5dij2kc11rpj: {…}, liwmh6z5qrcn1y2a21p: {…} }
+
+        let newTasks = { ...tasks, [id]: { ...tasks[id as keyof Object], subActions: actions, subActionsOrder: actionsOrder } }
+        setTasks(newTasks)
+        
+        
+    }
+
+    /* function changeTaskActionsOrder(id: string, actionsOrder: Array<string>) {
+        console.log(id, actionsOrder)
+        let newTasks = { ...tasks, [id]: { ...tasks[id as keyof Object], subActionsOrder: actionsOrder, subActions } }
+        console.log("new",newTasks)
+        setTasks(newTasks)
+    } */
 
     function deleteTask(id: string) {
         let newTasks = { ...tasks }
@@ -90,9 +154,13 @@ export default function Tasks() {
                             key={id}
                             id={id}
                             content={tasks[id as keyof Object].content}
-                            subActions={tasks[id as keyof Object].subActions}
                             contentSetter={changeTaskContent}
                             taskDeleter={deleteTask}
+
+                            subActions={tasks[id as keyof Object].subActions}
+                            subActionsOrder={tasks[id as keyof Object].subActionsOrder}
+                            /* actionOrderSetter={changeTaskActionsOrder} */
+                            actionSetter={changeTaskActions}
                         />
                     )
                 })}

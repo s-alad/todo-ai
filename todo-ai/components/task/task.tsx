@@ -22,18 +22,24 @@ interface TaskAction {
 interface TaskInterface {
     id: string,
     content: string,
-    subActions: { [fieldName: string]: TaskAction },
     contentSetter: (id: string, content: string) => void,
     taskDeleter: (id: string) => void,
+
+    subActions: { [fieldName: string]: TaskAction },
+    subActionsOrder: Array<string>,
+
+    actionSetter: (id: string, actions: { [fieldName: string]: TaskAction }, order: Array<string>) => void,
+    /* actionOrderSetter: (id: string, actionsOrder: Array<string>) => void, */
 }
 
-export default function Task({ id, content, contentSetter, taskDeleter }: TaskInterface) {
+export default function Task(
+    { id, content, contentSetter, taskDeleter, subActions, subActionsOrder, actionSetter, /* actionOrderSetter */ }: TaskInterface) {
 
     let [zapLoading, setZapLoading] = useState<boolean>(false)
     let [zapped, setZapped] = useState<boolean>(false)
 
-    let [actionsOrder, setActionsOrder] = useState<Array<string>>([])
-    let [actions, setActions] = useState<{ [fieldName: string]: TaskAction }>({})
+    /* let [actionsOrder, setActionsOrder] = useState<Array<string>>([])
+    let [actions, setActions] = useState<{ [fieldName: string]: TaskAction }>({}) */
 
     
 
@@ -50,8 +56,11 @@ export default function Task({ id, content, contentSetter, taskDeleter }: TaskIn
             newAddedActions[newAction.id] = newAction
         }
 
-        setActions({ ...newAddedActions })
-        setActionsOrder([...newAddedOrder])
+        /* setActions({ ...newAddedActions })
+        setActionsOrder([...newAddedOrder]) */
+        console.log("newly created actions", newAddedActions, newAddedOrder)
+        actionSetter(id, {...newAddedActions}, [...newAddedOrder])
+        /* actionOrderSetter(id, newAddedOrder) */
     }
 
     async function getActions() {
@@ -85,20 +94,26 @@ export default function Task({ id, content, contentSetter, taskDeleter }: TaskIn
         )
     }
 
-    function removeAction(id: string) {
-        let newActions = { ...actions }
-        delete newActions[id as keyof Object]
-        setActions(newActions)
+    function removeAction(subid: string) {
+        let newActions = { ...subActions }
+        delete newActions[subid as keyof Object]
+        /* setActions(newActions) */
 
-        let newOrder = [...actionsOrder]
-        newOrder.splice(newOrder.indexOf(id), 1)
-        setActionsOrder(newOrder)
+        let newOrder = [...subActionsOrder]
+        newOrder.splice(newOrder.indexOf(subid), 1)
+        /* setActionsOrder(newOrder) */
+
+        /* actionSetter(id, newActions)
+        actionOrderSetter(id, newOrder) */
+        actionSetter(id, newActions, newOrder)
     }
 
-    function changeActionContent(id: string, content: string) {
-        console.log(id, content)
-        let newActions = { ...actions, [id]: { ...actions[id as keyof Object], content: content } }
-        setActions(newActions)
+    function changeActionContent(subid: string, content: string) {
+        console.log(subid, content)
+        let newActions = { ...subActions, [subid]: { ...subActions[subid as keyof Object], content: content } }
+        /* setActions(newActions) */
+        /* actionSetter(id, newActions) */
+        actionSetter(id, newActions, subActionsOrder)
     }
 
     return (
@@ -147,15 +162,15 @@ export default function Task({ id, content, contentSetter, taskDeleter }: TaskIn
 
             <div className={s.actions}>
                 {
-                    actionsOrder.length > 0 &&
+                    subActionsOrder.length > 0 &&
                     <div>
                         {
-                            actionsOrder.map((actionId: string, index: number) => {
+                            subActionsOrder.map((actionId: string, index: number) => {
                                 return (
                                     <Action
                                         key={actionId}
                                         id={actionId}
-                                        content={actions[actionId].content}
+                                        content={subActions[actionId].content}
                                         actionContentSetter={changeActionContent}
                                         removeAction={removeAction}
                                     />

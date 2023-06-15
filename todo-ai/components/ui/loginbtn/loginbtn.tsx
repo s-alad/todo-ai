@@ -21,14 +21,16 @@ export default function LoginButton() {
         router.push("/")
     }
 
-    function move() {
-        router.push("/todo")
+    async function signUp() {
+        googleSignup(user).then(() => {
+            router.push("/todo")
+        })
     }
 
     if (!user) {
         return (
             <>
-            <div className={s.login} onClick={() => googleSignup(user, move)}>login</div>
+            <div className={s.login} onClick={() => signUp()}>login</div>
             {/* <Link href={"/signup"}><div className={s.login}>login</div></Link> */}
             </>
         )

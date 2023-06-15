@@ -17,14 +17,17 @@ export default function Signup() {
     const auth = firebase.auth()
     const [user, loading, error] = useAuthState(auth as any)
 
-    function move() {
-        let router = useRouter()
-        router.push("/todo")
+    const router = useRouter()
+
+    async function signUp() {
+        googleSignup(user).then(() => {
+            router.push("/todo")
+        })
     }
 
     return (
         <div className={s.signup}>
-            <div className={s.google} onClick={() => googleSignup(user, move)}>
+            <div className={s.google} onClick={() => signUp()}>
                 <div className={s.icon}>
                     <img src="/google.png" />
                 </div>
