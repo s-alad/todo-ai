@@ -35,28 +35,31 @@ export default async function googleSignup(user: any): Promise<boolean> {
             console.log("user already exists")
         }
 
-        let tasksRef = firebase.firestore().collection("todos").doc(user.uid)
-        let tasksDoc = await tasksRef.get()
-        if (!tasksDoc.exists) {
-            console.log("creating tasks")
-            await tasksRef.set({
-                tasks: {},
-                order: []
-/*                 home: {
+        let collections = ["home", "personal", "work"]
+        for (let col of collections) {
+            let tasksRef = firebase.firestore().collection("todos").doc(user.uid).collection(col).doc("tasks")
+            let tasksDoc = await tasksRef.get()
+            if (!tasksDoc.exists) {
+                console.log("creating tasks")
+                await tasksRef.set({
                     tasks: {},
                     order: []
-                },
-                work: {
-                    tasks: {},
-                    order: []
-                },
-                personal: {
-                    tasks: {},
-                    order: []
-                } */
-            })
-        } else {
-            console.log("tasks already exist")
+    /*                 home: {
+                        tasks: {},
+                        order: []
+                    },
+                    work: {
+                        tasks: {},
+                        order: []
+                    },
+                    personal: {
+                        tasks: {},
+                        order: []
+                    } */
+                })
+            } else {
+                console.log("tasks already exist")
+            }
         }
         return true
     } catch (error) {

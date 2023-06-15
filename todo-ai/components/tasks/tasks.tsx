@@ -35,7 +35,7 @@ export default function Tasks() {
     //when first loaded, get tasks from db
     useEffect(() => {
         const getTasks = async () => {
-            let res =  await db.collection("todos").doc(user!.uid).get()
+            let res =  await db.collection("todos").doc(user!.uid).collection("home").doc("tasks").get()
             console.log("result", res.data())
             if ( res.data().order.length > 0) {
                 console.log("tasks found", res.data()!.tasks)
@@ -61,7 +61,7 @@ export default function Tasks() {
             let dbLengthOfOrder = (await db.collection("todos").doc(user!.uid).get()).data()!.order.length */
             if (ready) {
                 console.log("updating tasks")
-                await db.collection("todos").doc(user!.uid).set({ tasks: tasks, order: order })
+                await db.collection("todos").doc(user!.uid).collection("home").doc("tasks").set({ tasks: tasks, order: order })
             }
         }
 
