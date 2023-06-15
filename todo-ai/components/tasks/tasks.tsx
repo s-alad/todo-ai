@@ -15,36 +15,22 @@ import {useCollectionData} from 'react-firebase-hooks/firestore';
 import googleSignup from "@/firebase/sign";
 import { useRouter } from "next/navigation";
 
-interface TaskAction {
-    id: string,
-    content: string,
-}
 
-interface TaskInterface {
-    id: string,
-    content: string,
-    subActions: { [fieldName: string]: TaskAction },
-    subActionsOrder: Array<string>,
-}
+import { TaskAction } from "@/models/TaskAction";
+import { TaskModel } from "@/models/TaskModel";
 
 export default function Tasks() {
 
     let [ready, setReady] = useState<boolean>(false)
 
     let [order, setOrder] = useState<Array<string>>([])
-    let [tasks, setTasks] = useState<{ [fieldName: string]: TaskInterface }>({})
+    let [tasks, setTasks] = useState<{ [fieldName: string]: TaskModel }>({})
 
     let [inputTask, setInputTask] = useState<string>("")
 
     const auth = firebase.auth()
     const [user, loading, error] = useAuthState(auth as any)
     const db = firebase.firestore()
-
-    /* if (loading) {
-        return (
-            <div>loading</div>
-        )
-    } */
 
     //when first loaded, get tasks from db
     useEffect(() => {
@@ -86,11 +72,9 @@ export default function Tasks() {
 
     function addTask() {
 
-        if (inputTask == "") {
-            return 
-        }
+        if (inputTask == "") {return }
 
-        let newTask: TaskInterface = { id: uid(), content: inputTask, subActions: {}, subActionsOrder: []}
+        let newTask: TaskModel = { id: uid(), content: inputTask, subActions: {}, subActionsOrder: [], checked: false}
         let newTasks = { ...tasks, [newTask.id]: newTask }
         setTasks(newTasks)
         setOrder([...order, newTask.id])
@@ -105,20 +89,15 @@ export default function Tasks() {
 
     function changeTaskActions(id: string, actions: { [fieldName: string]: TaskAction }, actionsOrder: Array<string>) {
         console.log(id, actions, actionsOrder)
-        //actions are in the form of Object { liwmh6z5wr98odtwomj: {…}, liwmh6z587bdhku9ye8: {…}, liwmh6z5p95xe200u6: {…}, liwmh6z5dij2kc11rpj: {…}, liwmh6z5qrcn1y2a21p: {…} }
-
         let newTasks = { ...tasks, [id]: { ...tasks[id as keyof Object], subActions: actions, subActionsOrder: actionsOrder } }
         setTasks(newTasks)
-        
-        
     }
 
-    /* function changeTaskActionsOrder(id: string, actionsOrder: Array<string>) {
-        console.log(id, actionsOrder)
-        let newTasks = { ...tasks, [id]: { ...tasks[id as keyof Object], subActionsOrder: actionsOrder, subActions } }
-        console.log("new",newTasks)
+    function changeCheck(id: string, checked: boolean) {
+        console.log(id, checked)
+        let newTasks = { ...tasks, [id]: { ...tasks[id as keyof Object], checked: checked } }
         setTasks(newTasks)
-    } */
+    }
 
     function deleteTask(id: string) {
         let newTasks = { ...tasks }
@@ -153,6 +132,9 @@ export default function Tasks() {
                         <Task
                             key={id}
                             id={id}
+                            checked={tasks[id as keyof Object].checked}
+                            checkSetter={changeCheck}
+
                             content={tasks[id as keyof Object].content}
                             contentSetter={changeTaskContent}
                             taskDeleter={deleteTask}

@@ -1,4 +1,9 @@
+import { TaskAction } from "./TaskAction";
 
-class TaskModel {
-    
+export interface TaskModel {
+    checked: boolean,
+    id: string,
+    content: string,
+    subActions: { [fieldName: string]: TaskAction },
+    subActionsOrder: Array<string>,
 }

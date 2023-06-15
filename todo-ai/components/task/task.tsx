@@ -13,37 +13,23 @@ import firebase from "@/firebase/client";
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import googleSignup from "@/firebase/sign";
 import { useRouter } from "next/navigation";
+import { TaskAction } from "@/models/TaskAction";
+import { TaskModel } from "@/models/TaskModel";
 
-interface TaskAction {
-    id: string,
-    content: string,
-}
+interface TaskComponent extends TaskModel {
 
-interface TaskInterface {
-    id: string,
-    content: string,
+
     contentSetter: (id: string, content: string) => void,
+    checkSetter: (id: string, checked: boolean) => void,
     taskDeleter: (id: string) => void,
-
-    subActions: { [fieldName: string]: TaskAction },
-    subActionsOrder: Array<string>,
-
     actionSetter: (id: string, actions: { [fieldName: string]: TaskAction }, order: Array<string>) => void,
-    /* actionOrderSetter: (id: string, actionsOrder: Array<string>) => void, */
 }
 
 export default function Task(
-    { id, content, contentSetter, taskDeleter, subActions, subActionsOrder, actionSetter, /* actionOrderSetter */ }: TaskInterface) {
+    { id, content, checked, checkSetter, contentSetter, taskDeleter, subActions, subActionsOrder, actionSetter, /* actionOrderSetter */ }: TaskComponent) {
 
     let [zapLoading, setZapLoading] = useState<boolean>(false)
     let [zapped, setZapped] = useState<boolean>(false)
-
-    /* let [actionsOrder, setActionsOrder] = useState<Array<string>>([])
-    let [actions, setActions] = useState<{ [fieldName: string]: TaskAction }>({}) */
-
-    
-
-
 
     function createActions(res: Array<string>) {
         let newAddedOrder = []
@@ -51,7 +37,7 @@ export default function Task(
 
         for (let recievedActionContent of res) {
             console.log(recievedActionContent)
-            let newAction: TaskAction = { id: uid(), content: recievedActionContent }
+            let newAction: TaskAction = { id: uid(), content: recievedActionContent, checked: false }
             newAddedOrder.push(newAction.id)
             newAddedActions[newAction.id] = newAction
         }
@@ -120,7 +106,12 @@ export default function Task(
         <div className={s.taskactions}>
             <div className={s.task}>
                 <div className={s.check}>
-                    <input type="checkbox" className={s.checkbox} />
+                    <input type="checkbox" className={s.checkbox} checked={checked} onChange={
+                        (e) => {
+                            console.log(e.target.checked)
+                            checkSetter(id, e.target.checked)
+                        }
+                    } />
                 </div>
                 <TextareaAutosize
                     /* minRows={1}
@@ -171,6 +162,7 @@ export default function Task(
                                         key={actionId}
                                         id={actionId}
                                         content={subActions[actionId].content}
+                                        checked={subActions[actionId].checked}
                                         actionContentSetter={changeActionContent}
                                         removeAction={removeAction}
                                     />

@@ -4,16 +4,14 @@ import s from './action.module.scss';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBolt, faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
 import TextareaAutosize from 'react-textarea-autosize';
+import { TaskAction } from "@/models/TaskAction";
 
-interface TaskAction {
-    id: string,
-    content: string,
-
+interface TaskComponent extends TaskAction {
     actionContentSetter: (id: string, content: string) => void,
     removeAction: (id: string) => void,
 }
 
-export default function Action( {id, content, removeAction, actionContentSetter}: TaskAction) {
+export default function Action( {id, content, removeAction, actionContentSetter}: TaskComponent) {
 
     if (content == undefined || content == "") {
         return null
