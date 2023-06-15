@@ -7,14 +7,9 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false; 
 
-import {
-  faBolt,
-} from "@fortawesome/free-solid-svg-icons";
+import {faBolt} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Todo from '@/utils/todo/todo';
 import { Suspense } from 'react';
-import Tasks from '@/components/tasks/tasks';
-import Link from 'next/link';
 import Instant from '@/components/instant/instant';
 
 export default function Home() {
@@ -34,8 +29,6 @@ export default function Home() {
 
       <Suspense fallback={<div className={l.loading}></div>}> 
         <Instant />
-
-
       </Suspense>
 
     </main>
